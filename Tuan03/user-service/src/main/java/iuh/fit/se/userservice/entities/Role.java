@@ -19,10 +19,11 @@ public class Role extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String code;
     private String name;
 
+    //REFRESH: cập nhật lại dữ liệu khi thay đổi
+    //EAGER: load ngay lập tức
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "role_permissions",
             joinColumns = {@JoinColumn(name = "role_id")},

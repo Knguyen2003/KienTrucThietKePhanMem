@@ -2,8 +2,6 @@ package iuh.fit.se.userservice.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -14,8 +12,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Getter
-@Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity implements Serializable {
