@@ -9,6 +9,8 @@ public class CarDecorator implements Car{
         this.car=c;
     }
 
+
+
     /**
      * Phương thức assemble() sẽ được gọi từ các class con
      */

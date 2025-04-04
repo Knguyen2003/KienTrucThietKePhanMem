@@ -12,5 +12,10 @@ public class DecoratorPatternTest {
         System.out.println("\n*****");
         Car sportsLuxuryCar2 = new BasicCar();
         sportsLuxuryCar2.assemble();
+
+
+        Car xeMoi =  new LuxuryCar(new SportsCar(new BasicCar()));
+
+
     }
 }

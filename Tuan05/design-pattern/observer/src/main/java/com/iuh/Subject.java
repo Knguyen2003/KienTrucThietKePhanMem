@@ -1,5 +1,7 @@
 package com.iuh;
 
+
+//Bị theo dõi (kệnh youtube)
 public interface Subject {
 
     public void register(Observer obj);

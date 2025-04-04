@@ -24,31 +24,29 @@ public class MyTopic implements Subject {
     @Override
     public void register(Observer obj) {
         if (obj == null) throw new NullPointerException("Null Observer");
-//        synchronized (MUTEX) {
+        synchronized (MUTEX) {
             if (!observers.contains(obj)) observers.add(obj);  //K thêm trùng
-//        }
+        }
     }
+
 
     @Override
     public void unregister(Observer obj) {
-//        synchronized (MUTEX) {
-//            observers.remove(obj);
-//        }
-
-        observers.remove(obj);
+        synchronized (MUTEX) {
+            observers.remove(obj);
+        }
     }
 
     @Override
     public void notifyObservers() {
         List<Observer> observersLocal = null; //Tạo một bản sao của danh sách Observer để tránh lỗi ConcurrentModificationException
-//      synchronized (MUTEX) {
+      synchronized (MUTEX) {
             if (!changed)  //changed = false thì k cần thông báo
                 return;
             observersLocal = new ArrayList<>(this.observers);  //Copy danh sách Observer
             this.changed = false;
-//      }
+      }
         for (Observer obj : observersLocal) {
-//                obj.update();
             obj.update(this.message);
         }
     }
@@ -57,6 +55,6 @@ public class MyTopic implements Subject {
         System.out.println("Message Posted to Topic:" + msg);
         this.message = msg;
         this.changed = true;
-        notifyObservers();
+        notifyObservers();  //gưi tin nhan tụ dong cho tung nguoi dang ky
     }
 }
