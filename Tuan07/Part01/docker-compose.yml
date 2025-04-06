@@ -1,0 +1,9 @@
+services:
+  web:
+    build: ./web  # Xây dựng image cho service web từ Dockerfile trong thư mục ./web
+    ports:
+      - "8080:80"
+  db:
+    build: ./db  # Xây dựng image cho service db từ Dockerfile trong thư mục ./db
+    ports:
+      - "5432:5432"
