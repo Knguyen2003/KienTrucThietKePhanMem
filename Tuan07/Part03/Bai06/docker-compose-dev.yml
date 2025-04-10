@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./app:/app
+        ports:
+            - "5000:5000"
+        command: python app.py
+
+    tests:
+        image: python:3.10
+        volumes:
+            - ./app:/app
+            - ./tests:/tests
+        working_dir: /tests
+        command: >
+            sh -c "pip install flask && pytest --maxfail=1 --disable-warnings -q"

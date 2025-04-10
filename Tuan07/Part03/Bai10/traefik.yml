@@ -1,0 +1,8 @@
+# traefik.yml
+entryPoints:
+  web:
+    address: ":80"
+
+providers:
+  docker:
+    exposedByDefault: false

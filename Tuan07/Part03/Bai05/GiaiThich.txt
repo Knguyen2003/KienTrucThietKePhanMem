@@ -1,0 +1,10 @@
+Vote (Frontend - Python Flask): Gửi biểu quyết của người dùng.
+
+Result (Backend - Node.js): Hiển thị kết quả vote.
+
+Redis: Lưu tạm thời các vote trước khi ghi vào database.
+
+Worker (Java): Chuyển dữ liệu từ Redis vào PostgreSQL.
+
+PostgreSQL: Lưu trữ kết quả vote.
+

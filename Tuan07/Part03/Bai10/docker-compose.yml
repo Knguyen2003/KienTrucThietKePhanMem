@@ -1,0 +1,28 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v2.11
+    command:
+      - --configFile=/traefik.yml
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yml:/traefik.yml
+    networks:
+      - web
+
+  flask:
+    build: ./flask-app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.flask.rule=Host(`localhost`)"
+      - "traefik.http.services.flask.loadbalancer.server.port=5000"
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
