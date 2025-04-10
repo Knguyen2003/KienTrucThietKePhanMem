@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  # Định nghĩa dịch vụ cho ứng dụng Node.js
+  node-app:
+    # Docker sẽ tìm và build image từ thư mục hiện tại (.), sử dụng Dockerfile.
+    build: .
+    # Tên cho container là node_container
+    container_name: node_container
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    restart: always

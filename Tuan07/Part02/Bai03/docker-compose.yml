@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container #Tên container
+    restart: always #Tự khởi động nếu container dừng
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql #Gắn volume mysql_data vào thư mục /var/lib/mysql trong container
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql #Kết nối tới MySQL, dùng tên service mysql.
+      MYSQL_ROOT_PASSWORD: rootpassword #Mật khẩu root của MySQL.
+
+volumes:
+  mysql_data: #Giúp lưu trữ dữ liệu MySQL ngay cả khi container bị xóa.

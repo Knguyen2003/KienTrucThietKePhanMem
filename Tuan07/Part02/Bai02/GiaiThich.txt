@@ -1,0 +1,18 @@
+docker exec -it mysql_container mysql -u user -p
+Trong đó:
+
+docker exec: Chạy một lệnh trong container đang chạy.
+
+-it:
+
+	-i (interactive) → Giữ kết nối mở để nhập lệnh.
+
+	-t (TTY) → Mở giao diện dòng lệnh của MySQL.
+
+mysql_container: Tên container MySQL.
+
+mysql: Chạy MySQL CLI bên trong container.
+
+-u user: Đăng nhập với user user.
+
+-p: Yêu cầu nhập mật khẩu (password).

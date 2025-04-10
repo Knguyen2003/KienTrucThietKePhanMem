@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest # Sử dụng image Redis mới nhất
+    container_name: redis_container
+    restart: always # Tự động khởi động lại nếu container dừng
+    ports:
+      - "6379:6379" # Mở cổng 6379 để truy cập Redis từ bên ngoài
+    volumes:
+      - redis_data:/data # Lưu trữ dữ liệu Redis tránh mất khi container tắt
+
+volumes:
+  redis_data:

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    #Thiết lập tài khoản
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword #Mật khẩu root (quản trị cao nhất)
+      MYSQL_DATABASE: mydb #Tên cơ sở dữ liệu mặc định
+      MYSQL_USER: user #Tên tài khoản người dùng
+      MYSQL_PASSWORD: password #Mật khẩu tài khoản người dùng
+    ports:
+      - "3306:3306"
+    #Lưu trữ dữ liệu ngay cả khi container bị xóa.
+    volumes:
+      - mysql_data:/var/lib/mysql #/var/lib/mysql là thư mục trong container nơi MySQL lưu trữ dữ liệu
+
+volumes:
+  mysql_data: #Tên volume

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    networks:
+      - my_network
+
+  node-app:
+    build: .
+    container_name: node_container
+    depends_on:
+      - mysql
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
