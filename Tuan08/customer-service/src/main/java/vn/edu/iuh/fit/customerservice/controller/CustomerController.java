@@ -1,14 +1,17 @@
 package vn.edu.iuh.fit.customerservice.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.customerservice.model.Customer;
 import vn.edu.iuh.fit.customerservice.service.CustomerService;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
     private final CustomerService customerService;
 
@@ -27,27 +30,44 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getById(@PathVariable Long id) {
-        return customerService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        try {
+            Customer c = customerService.findById(id);
+            response.put("status", HttpStatus.CREATED.value());
+            response.put("message", "Customer find by id succesful!");
+            response.put("data", c);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }  catch (Exception ex) {
+            // Các lỗi còn lại
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("message", "Đã xảy ra lỗi không mong muốn.");
+            response.put("error", ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody Customer updatedCustomer) {
-        return customerService.findById(id)
-                .map(customer -> {
-                    customer.setName(updatedCustomer.getName());
-                    customer.setEmail(updatedCustomer.getEmail());
-                    customer.setAddress(updatedCustomer.getAddress());
-                    customer.setPhone(updatedCustomer.getPhone());
-                    return ResponseEntity.ok(customerService.save(customer));
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
 
-    } 
-     
+    @PostMapping("/save")
+    public ResponseEntity<Map<String, Object>> save(@RequestBody Customer customer) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        try {
+            Customer c = customerService.save(customer);
+            response.put("status", HttpStatus.CREATED.value());
+            response.put("message", "Customer created successfully!");
+            response.put("data", c);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }  catch (Exception ex) {
+            // Các lỗi còn lại
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.put("message", "Đã xảy ra lỗi không mong muốn.");
+            response.put("error", ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+}
+
+
      
      
      
